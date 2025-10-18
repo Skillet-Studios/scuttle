@@ -19,9 +19,9 @@ function Overview() {
             api.get("/summoners/count"),
           ]);
 
-        setNumGuilds(guildsResponse.data);
-        setNumCommands(commandsResponse.data);
-        setNumSummoners(summonersResponse.data);
+        setNumGuilds(guildsResponse.data.data.count);
+        setNumCommands(commandsResponse.data.data.count);
+        setNumSummoners(summonersResponse.data.data.count);
       } catch (error) {
         console.error("Error fetching analytics:", error);
       }
