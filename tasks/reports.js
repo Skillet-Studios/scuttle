@@ -18,7 +18,7 @@ async function sendWeeklyReports(client) {
       const channelResponse = await api.get(`/guilds/channel`, {
         params: { guildId: guild.id },
       });
-      channelId = channelResponse.data?.mainChannelId || null;
+      channelId = channelResponse.data?.data.mainChannelId || null;
     } catch (error) {
       if (error.response?.status === 404) {
         console.log(`⚠️ [${guild.name}] No main channel set. Skipping...`);
@@ -63,7 +63,7 @@ async function sendWeeklyReports(client) {
         const reportResponse = await api.get(`/reports/pretty`, {
           params: { guildId: guild.id, range: 7, queueType: 'ranked_solo' },
         });
-        report = reportResponse.data.report;
+        report = reportResponse.data.data.report;
       } catch (error) {
         if (error.response?.status === 404) {
           console.log(
@@ -86,7 +86,7 @@ async function sendWeeklyReports(client) {
       let summoners = [];
       try {
         const summonersResponse = await api.get(`/summoners/guild/${guild.id}`);
-        summoners = summonersResponse.data || [];
+        summoners = summonersResponse.data.data || [];
       } catch (error) {
         console.error(
           `❌ [${guild.name}] Error fetching summoners:`,

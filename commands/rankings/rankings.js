@@ -54,7 +54,7 @@ module.exports = {
             queueType: queueType,
           },
         });
-        rankings = response.data.rankings;
+        rankings = response.data.data.rankings;
       } catch (error) {
         if (error.response?.status === 404) {
           throw new Error(

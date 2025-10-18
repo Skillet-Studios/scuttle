@@ -70,11 +70,11 @@ module.exports = {
         const guildResponse = await api.get(`/guilds/filter`, {
           params: { guildId },
         });
-        if (!guildResponse.data.guild) {
+        if (!guildResponse.data.data.guild) {
           throw new Error('The specified guild does not exist.');
         }
 
-        guildName = guildResponse.data.guild.name || 'Unknown Guild';
+        guildName = guildResponse.data.data.guild.name || 'Unknown Guild';
       }
 
       let report;
@@ -82,7 +82,7 @@ module.exports = {
         const reportResponse = await api.get(`/reports/pretty`, {
           params: { guildId, range, queueType },
         });
-        report = reportResponse.data.report;
+        report = reportResponse.data.data.report;
       } catch (error) {
         if (error.response?.status === 404) {
           throw new Error(
@@ -94,7 +94,7 @@ module.exports = {
 
       // Fetch the summoners for the guild
       const summonersResponse = await api.get(`/summoners/guild/${guildId}`);
-      const summoners = summonersResponse.data || [];
+      const summoners = summonersResponse.data.data || [];
 
       let cachedSummoners = [];
       let nonCachedSummoners = [];

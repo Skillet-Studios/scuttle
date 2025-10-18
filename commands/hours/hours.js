@@ -85,7 +85,7 @@ module.exports = {
         const puuidResponse = await api.get(`/riot/puuid`, {
           params: { riotId: summonerRiotId },
         });
-        puuid = puuidResponse.data.puuid;
+        puuid = puuidResponse.data.data.puuid;
       } catch (error) {
         if (error.response?.status === 404) {
           throw new Error(
@@ -99,7 +99,7 @@ module.exports = {
       const guildSummonersResponse = await api.get(
         `/summoners/guild/${guildId}`
       );
-      const summonersInGuild = guildSummonersResponse.data || [];
+      const summonersInGuild = guildSummonersResponse.data.data || [];
 
       if (summonersInGuild.length === 0) {
         throw new Error(
@@ -122,7 +122,7 @@ module.exports = {
         const playtimeResponse = await api.get(`/hours/${puuid}`, {
           params: { range, queueType },
         });
-        playtimeData = playtimeResponse.data;
+        playtimeData = playtimeResponse.data.data;
       } catch (error) {
         if (error.response?.status === 404) {
           throw new Error(`No playtime data found for **${summonerRiotId}**.`);

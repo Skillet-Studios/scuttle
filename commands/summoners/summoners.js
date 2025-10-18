@@ -62,7 +62,7 @@ module.exports = {
         let summoners;
         try {
           const response = await api.get(`/summoners/guild/${guildId}`);
-          summoners = response.data;
+          summoners = response.data.data;
         } catch (error) {
           if (error.response?.status === 404) {
             throw new Error(

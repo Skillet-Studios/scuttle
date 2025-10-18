@@ -82,7 +82,7 @@ module.exports = {
         const puuidResponse = await api.get(`/riot/puuid`, {
           params: { riotId: summonerRiotId },
         });
-        puuid = puuidResponse.data.puuid;
+        puuid = puuidResponse.data.data.puuid;
       } catch (error) {
         if (error.response?.status === 404) {
           throw new Error(
@@ -96,7 +96,7 @@ module.exports = {
       const guildSummonersResponse = await api.get(
         `/summoners/guild/${guildId}`
       );
-      const summonersInGuild = guildSummonersResponse.data || [];
+      const summonersInGuild = guildSummonersResponse.data.data || [];
 
       if (summonersInGuild.length === 0) {
         throw new Error(
@@ -118,7 +118,7 @@ module.exports = {
         params: { range, name: summonerRiotId },
       });
 
-      if (!cacheResponse.data.isCached) {
+      if (!cacheResponse.data.data.isCached) {
         throw new Error(
           `Summoner **${summonerRiotId}** has been added recently and does not have match data yet. Please allow about 1 hour.`
         );
@@ -130,7 +130,7 @@ module.exports = {
         const statsResponse = await api.get(`/stats/pretty/${puuid}`, {
           params: { range, queueType },
         });
-        stats = statsResponse.data.stats;
+        stats = statsResponse.data.data.stats;
       } catch (error) {
         if (error.response?.status === 404) {
           throw new Error(`No stats found for **${summonerRiotId}**.`);
