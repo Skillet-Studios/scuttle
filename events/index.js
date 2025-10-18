@@ -1,3 +1,4 @@
+const { EmbedBuilder } = require('discord.js');
 const logger = require('../utils/logger');
 const { ENVIRONMENT } = require('../config');
 const api = require('../utils/api');
@@ -108,27 +109,52 @@ module.exports = {
     const guildName = interaction.guild ? interaction.guild.name : 'DM';
     const userTag = interaction.user.tag;
     const commandName = interaction.commandName;
+    const subcommandGroup = interaction.options.getSubcommandGroup(false); // Get subcommand group if available
     const subcommandName = interaction.options.getSubcommand(false); // Get subcommand if available
+
+    // Build full command string for console logging (user-friendly format)
+    let fullCommand = `/${commandName}`;
+    if (subcommandGroup) {
+      fullCommand += ` ${subcommandGroup}`;
+    }
+    if (subcommandName) {
+      fullCommand += ` ${subcommandName}`;
+    }
+
+    // Build command string for database storage (underscore format)
+    const commandParts = [commandName];
+    if (subcommandGroup) {
+      commandParts.push(subcommandGroup);
+    }
+    if (subcommandName) {
+      commandParts.push(subcommandName);
+    }
+    const commandForDb = commandParts.join('_');
 
     // Build log message
     let logMessage = `\n📥 Command Received\n`;
     logMessage += `🏠 Guild: ${guildName}\n`;
     logMessage += `👤 User: ${userTag}\n`;
-    logMessage += `🛠️ Command: /${commandName}`;
-
-    if (subcommandName) {
-      logMessage += ` ${subcommandName}`; // Include subcommand if available
-    }
+    logMessage += `🛠️ Command: ${fullCommand}`;
 
     console.log(logMessage);
 
     try {
       await command.execute(interaction);
-      console.log(
-        `✅ Executed Successfully: /${commandName}${
-          subcommandName ? ` ${subcommandName}` : ''
-        }`
-      );
+      console.log(`✅ Executed Successfully: ${fullCommand}`);
+
+      // Log command invocation to API
+      try {
+        await api.post('/commands/log', {
+          command: commandForDb,
+          discordUserId: interaction.user.id,
+          discordUsername: interaction.user.tag,
+          guildId: interaction.guild?.id || null,
+          guildName: interaction.guild?.name || null,
+        });
+      } catch (apiError) {
+        console.error('❌ Failed to log command to API:', apiError.message);
+      }
 
       // Log to Discord if the command has replied or deferred
       if (interaction.replied || interaction.deferred) {
