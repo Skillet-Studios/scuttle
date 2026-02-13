@@ -1,0 +1,8 @@
+{
+  "short_name": "Scuttle",
+  "name": "A League of Legends discord bot for fetching and displaying match data.",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
