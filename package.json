@@ -1,0 +1,10 @@
+{
+  "name": "scuttle",
+  "private": true,
+  "scripts": {
+    "dev:api": "pnpm --filter @scuttle/api dev",
+    "dev:bot": "pnpm --filter @scuttle/bot start",
+    "dev:web": "pnpm --filter @scuttle/web start",
+    "build": "pnpm -r build"
+  }
+}

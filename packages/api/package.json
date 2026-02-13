@@ -1,5 +1,5 @@
 {
-  "name": "scuttlewebserver",
+  "name": "@scuttle/api",
   "version": "1.0.0",
   "description": "\"Backend API for ScuttleWeb\"",
   "main": "dist/server.js",

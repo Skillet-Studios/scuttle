@@ -1,0 +1,35 @@
+node_modules/
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
+/build
+
+# IDE / OS
+.DS_Store
+
+# Vercel
+.vercel
+
+# Prisma generated
+/generated/prisma
+
+# TypeScript
+*.tsbuildinfo
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+/coverage
+
+# pnp
+/.pnp
+.pnp.js
+
+# Dev artifacts
+example*.json
