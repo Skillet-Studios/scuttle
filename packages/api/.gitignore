@@ -1,0 +1,8 @@
+node_modules/
+.env
+.vercel
+claude.md
+/generated/prisma
+dist/
+*.tsbuildinfo
+example*.json
