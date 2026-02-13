@@ -7,7 +7,7 @@ const router = Router();
 
 router.get("/:summonerPuuid", async (req: Request, res: Response) => {
     try {
-        const { summonerPuuid } = req.params;
+        const summonerPuuid = req.params.summonerPuuid as string;
         const { queueType = "ranked_solo", range } = req.query;
 
         if (!range) {

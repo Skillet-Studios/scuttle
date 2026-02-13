@@ -7,7 +7,7 @@ const router = Router();
 
 router.get("/:summonerPuuid", async (req: Request, res: Response) => {
     try {
-        const summonerPuuid = req.params.summonerPuuid;
+        const summonerPuuid = req.params.summonerPuuid as string;
         const range = parseInt(req.query.range as string, 10) || 7;
         const queueType = (req.query.queueType as string) || "ranked_solo";
 
@@ -35,7 +35,7 @@ router.get("/:summonerPuuid", async (req: Request, res: Response) => {
 
 router.get("/pretty/:summonerPuuid", async (req: Request, res: Response) => {
     try {
-        const summonerPuuid = req.params.summonerPuuid;
+        const summonerPuuid = req.params.summonerPuuid as string;
         const range = parseInt(req.query.range as string, 10) || 7;
         const queueType = (req.query.queueType as string) || "ranked_solo";
 

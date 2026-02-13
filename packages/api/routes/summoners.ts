@@ -31,7 +31,7 @@ router.get("/count", async (_req: Request, res: Response) => {
 
 router.get("/guild/:guildId", async (req: Request, res: Response) => {
     try {
-        const summoners = await getSummonersByGuildId(req.params.guildId);
+        const summoners = await getSummonersByGuildId(req.params.guildId as string);
         return respondWithSuccess(res, 200, undefined, summoners);
     } catch (error) {
         logger.error(
@@ -78,7 +78,7 @@ router.post("/cache/timestamp", async (req: Request, res: Response) => {
 
 router.get("/cache/:summonerId", async (req: Request, res: Response) => {
     try {
-        const puuid = req.params.summonerId;
+        const puuid = req.params.summonerId as string;
         const range = parseInt(req.query.range as string, 10) || 1;
         const name = (req.query.name as string) || "Unknown";
 
